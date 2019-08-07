@@ -10,36 +10,6 @@ var userSchema = new Schema({
   }
 });
 
-// var dateSchema = new Schema({
-//   day: {
-//     type:String,
-//     default: ''
-//   },
-//   month: {
-//     type: String,
-//     default: ''
-//   },
-//   year: {
-//     type: String,
-//     default: ''
-//   }
-// });
-//
-// var timeSchema = new Schema({
-//   hour: {
-//     type: String,
-//     default: ''
-//   },
-//   minute: {
-//     type: String,
-//     default: ''
-//   },
-//   second: {
-//     type: String,
-//     default: ''
-//   }
-// });
-
 var meetingSchema = new Schema({
   username:
   {
