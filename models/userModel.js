@@ -2,26 +2,6 @@ var mongoose = require('mongoose');
 var Schema=mongoose.Schema;
 var passportLocalMongoose = require('passport-local-mongoose');
 
-// var userSchema=new schema({
-//   admin:
-//   {
-//     type:Boolean,
-//     default:false
-//   },
-//   level1:
-//   {
-//     type: Number,
-//     min: 1,
-//     max :2,
-//     default: 1
-//   }
-// });
-//
-// userSchema.plugin(passportLocalMongoose);
-// var userModel=mongoose.model('user',userSchema);
-//
-// module.exports=userModel;
-
 var notificationSchema=new Schema({
   name:{
     type: String,
