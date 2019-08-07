@@ -15,10 +15,6 @@ module.exports = function (io, Users) {
 
     socket.on('join',(params,callback)=>{
       socket.join(params.room);
-
-      //For Getting the old messages
-
-
       users.AddUserData(socket.id,params.name,params.room);
       console.log(users);
       console.log(socket.id);
@@ -45,21 +41,10 @@ module.exports = function (io, Users) {
           console.log(params);
           console.log('Succesful in retrieving the old messages');
           console.log(doc);
-
-          // var key = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ];
-          // for(var i=0; i<doc.length; i++)
-          // {
-          //   var encryptedBytes = aesjs.utils.hex.toBytes(doc[i].text);
-          //   var aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(1));
-          //   var decryptedBytes = aesCtr.decrypt(encryptedBytes);
-          //   doc[i].text = aesjs.utils.utf8.fromBytes(decryptedBytes);
-          // }
-
           io.to(socket.id).emit('oldMessage',doc);
         }
       })
       io.to(params.room).emit('usersList',users.GetUsersList(params.room));
-
       callback();
     })
 
@@ -70,13 +55,6 @@ module.exports = function (io, Users) {
           room : message.room,
           from : message.sender
         });
-
-      //   var msg;
-      //   var key = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ];
-      // var textBytes = aesjs.utils.utf8.toBytes(message.text);
-      // var aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(1));
-      // var encryptedBytes = aesCtr.encrypt(textBytes);
-      //  message.text = aesjs.utils.hex.fromBytes(encryptedBytes);
 
       group.find({_id:message.room})
       .then((meet)=>{
@@ -122,14 +100,6 @@ module.exports = function (io, Users) {
               }, {'new': true}, function(err) {
                 console.log('done');
               })
-              // user[0].notification.push(notiInsert);
-              // user[0].save((err,doc)=>{
-              //   if(err)
-              //   console.log('error in sending noti the message');
-              //   else {
-              //     console.log('document\n'+doc);
-              //     console.log('Succesfully sent the noti to database');
-              //   }
               })
           })
 
@@ -147,7 +117,6 @@ module.exports = function (io, Users) {
           })
           //From Here the code has been added
           var names=users.GetUsersList(message.room);
-
             group.find({_id:message.room})
               .then((meet)=>{
                 console.log('in here is the error\n'+meet);
@@ -186,51 +155,7 @@ module.exports = function (io, Users) {
           //Uptill here the code has been added
         }
       })
-
-// group.find({_id:message.room})
-// .then((meet)=>{
-//   var notification = new notification({name:meet[0].username,text:message.text,gettingid:meet[0]._id,groupornot:true});
-//
-// })
-
-//From Here the code has been added
-// var names=users.GetUsersList(message.room);
-//
-//   group.find({_id:message.room})
-//     .then((meet)=>{
-//       for(var j=0;j<meet[0].users.length;j++)
-//       {
-//         var flag=0;
-//         var use=meet[0].users[j];//This is the id and not the username
-//         User.find({_id:use})
-//         .then((user)=>{
-//         for(var i=0;i<names.length;i++)
-//         {
-//           if(user.username==names[i])
-//           {
-//             console.log(user.username+' is online');
-//             flag=1;
-//             break;
-//           }
-//         }
-//         if(flag==0)
-//         {
-//           var notiInsert = {name:meet.username,text:message.text,gettingid: message.room,groupornot: true}
-//           console.log(user.username+' is not online and thence the noti is being updated');
-//           User.findByIdAndUpdate(user._id,{
-//             $push: { notification:notiInsert}
-//           }, {'new': true}, function(err) {
-//             console.log('done');
-//           })//Here shall be the notification object
-//         }
-//       })
-//       }
-//     })
-//Uptill here the code has been added
-
-
-
-        callback();
+     callback();
     });
 
     socket.on('disconnect',()=>{
